@@ -1,8 +1,12 @@
 ## Change log
 ----------------------
 
-Version 1.1-SNAPSHOT
+Version 2-SNAPSHOT
 -------------
+
+ADDED:
+
+- new extension class for clone quietly
 
 Version 1
 -------------

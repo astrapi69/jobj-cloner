@@ -23,12 +23,11 @@ package io.github.astrapi69.clone;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 import com.rits.cloning.Cloner;
 
 /**
- * The class {@link CloneObjectExtensions} provide methods for clone an object.
+ * The class {@link CloneObjectExtensions} provide methods for clone an object
  */
 public final class CloneObjectExtensions
 {
@@ -58,8 +57,8 @@ public final class CloneObjectExtensions
 	 *             Thrown if the property accessor method throws an exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T clone(final T object) throws NoSuchMethodException, IllegalAccessException,
-		InvocationTargetException
+	public static <T> T clone(final T object)
+		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
 		return (T)cloneObject(object);
 	}
@@ -146,25 +145,10 @@ public final class CloneObjectExtensions
 		// Try to clone the object with external cloner
 		if (clone == null)
 		{
-			clone = withCloner(object);
+			clone = CloneQuietlyExtensions.withCloner(object);
 		}
 
 		return clone;
-	}
-
-	/**
-	 * Try to clone the given object with the external cloner
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param object
-	 *            the object
-	 * @return the t
-	 */
-	public static <T> T withCloner(final T object)
-	{
-		Objects.requireNonNull(object);
-		return cloner.deepClone(object);
 	}
 
 }

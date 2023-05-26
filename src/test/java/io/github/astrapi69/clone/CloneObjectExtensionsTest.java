@@ -22,7 +22,6 @@ package io.github.astrapi69.clone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
@@ -58,24 +57,10 @@ public class CloneObjectExtensionsTest
 	 *             and the underlying method is inaccessible.
 	 * @throws InvocationTargetException
 	 *             Thrown if the property accessor method throws an exception
-	 * @throws ClassNotFoundException
-	 *             occurs if a given class cannot be located by the specified class loader
-	 * @throws InstantiationException
-	 *             Thrown if one of the following reasons: the class object
-	 *             <ul>
-	 *             <li>represents an abstract class</li>
-	 *             <li>represents an interface</li>
-	 *             <li>represents an array class</li>
-	 *             <li>represents a primitive type</li>
-	 *             <li>represents {@code void}</li>
-	 *             <li>has no nullary constructor</li>
-	 *             </ul>
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testClone() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+		InvocationTargetException
 	{
 		Object expected;
 		Object actual;
@@ -85,7 +70,7 @@ public class CloneObjectExtensionsTest
 		assertEquals(expected, actual);
 
 
-		expected = "Hy there...";
+		expected = "Hey there...";
 		actual = CloneObjectExtensions.clone(expected);
 		assertEquals(expected, actual);
 
@@ -105,8 +90,7 @@ public class CloneObjectExtensionsTest
 	@Test
 	@Disabled("upgrade to jdk11")
 	public void testCloneArray() throws NoSuchMethodException, SecurityException,
-		IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-		ClassNotFoundException, InstantiationException, IOException
+		IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
 		String[] expected;
 		String[] actual;
@@ -118,22 +102,6 @@ public class CloneObjectExtensionsTest
 			assertEquals("Cloned object should be equal with the source object.", expected[i],
 				actual[i]);
 		}
-	}
-
-	/**
-	 * Test method for {@link CloneObjectExtensions#withCloner(Object)}
-	 */
-	@Test
-	@Disabled("upgrade to jdk11")
-	public void testCloneBeanWithComposition()
-	{
-		Employee actual;
-		Employee expected;
-
-		actual = Employee.builder().person(Person.builder().name("Nikky").nickname("Six")
-			.gender(Gender.MALE).about("").married(false).build()).build();
-		expected = CloneObjectExtensions.withCloner(actual);
-		assertEquals(expected, actual);
 	}
 
 	/**
@@ -150,24 +118,10 @@ public class CloneObjectExtensionsTest
 	 *             and the underlying method is inaccessible.
 	 * @throws InvocationTargetException
 	 *             Thrown if the property accessor method throws an exception
-	 * @throws ClassNotFoundException
-	 *             occurs if a given class cannot be located by the specified class loader
-	 * @throws InstantiationException
-	 *             Thrown if one of the following reasons: the class object
-	 *             <ul>
-	 *             <li>represents an abstract class</li>
-	 *             <li>represents an interface</li>
-	 *             <li>represents an array class</li>
-	 *             <li>represents a primitive type</li>
-	 *             <li>represents {@code void}</li>
-	 *             <li>has no nullary constructor</li>
-	 *             </ul>
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testCloneNotSerializable() throws NoSuchMethodException, IllegalAccessException,
-		InstantiationException, IOException, InvocationTargetException, ClassNotFoundException
+	public void testCloneNotSerializable()
+		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
 		NotSerializable actual;
 		NotSerializable expected;
@@ -191,24 +145,10 @@ public class CloneObjectExtensionsTest
 	 *             and the underlying method is inaccessible.
 	 * @throws InvocationTargetException
 	 *             Thrown if the property accessor method throws an exception
-	 * @throws ClassNotFoundException
-	 *             occurs if a given class cannot be located by the specified class loader
-	 * @throws InstantiationException
-	 *             Thrown if one of the following reasons: the class object
-	 *             <ul>
-	 *             <li>represents an abstract class</li>
-	 *             <li>represents an interface</li>
-	 *             <li>represents an array class</li>
-	 *             <li>represents a primitive type</li>
-	 *             <li>represents {@code void}</li>
-	 *             <li>has no nullary constructor</li>
-	 *             </ul>
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testCloneObject() throws NoSuchMethodException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+	public void testCloneObject()
+		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
 
 		Object expected;
@@ -234,9 +174,8 @@ public class CloneObjectExtensionsTest
 	 * values.
 	 */
 	@Test
-	public void testClonePrimitiveArray()
-		throws NoSuchMethodException, SecurityException, IllegalAccessException,
-		InvocationTargetException, ClassNotFoundException, InstantiationException, IOException
+	public void testClonePrimitiveArray() throws NoSuchMethodException, SecurityException,
+		IllegalAccessException, InvocationTargetException
 	{
 		int[] actual;
 		int[] expected;
@@ -249,26 +188,6 @@ public class CloneObjectExtensionsTest
 		{
 			assertEquals(expected[i], actual[i]);
 		}
-	}
-
-	/**
-	 * Test method for {@link CloneObjectExtensions#withCloner(Object)}
-	 */
-	@Test
-	@Disabled("upgrade to jdk11")
-	public void testCloneWithCloner()
-	{
-		Person actual;
-		Person expected;
-		actual = Person.builder().name("Nikky").nickname("Six").gender(Gender.MALE).about("")
-			.married(false).build();
-		expected = CloneObjectExtensions.withCloner(actual);
-		assertEquals(expected, actual);
-		actual = Member.buildMember().name("Nikky").nickname("Six").gender(Gender.MALE).about("")
-			.married(false).dateofbirth(new Date()).dateofMarriage(new Date()).build();
-
-		expected = CloneObjectExtensions.withCloner(actual);
-		assertEquals(expected, actual);
 	}
 
 	/**
