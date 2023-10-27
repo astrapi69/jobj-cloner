@@ -1,22 +1,26 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2015 Asterios Raptis
+ * Copyright (C) 2022 Asterios Raptis
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package io.github.astrapi69.clone;
 
@@ -90,10 +94,10 @@ public class CloneQuietlyExtensionsTest
 	}
 
 	/**
-	 * Test method for {@link CloneQuietlyExtensions#withCloner(Object)}
+	 * Test method for {@link CloneQuietlyExtensions#clone(Object)}
 	 */
 	@Test
-	@Disabled("upgrade to jdk11")
+//	@Disabled("upgrade to jdk11")
 	public void testCloneBeanWithComposition()
 	{
 		Employee actual;
@@ -101,7 +105,7 @@ public class CloneQuietlyExtensionsTest
 
 		actual = Employee.builder().person(Person.builder().name("Nikky").nickname("Six")
 			.gender(Gender.MALE).about("").married(false).build()).build();
-		expected = CloneQuietlyExtensions.withCloner(actual);
+		expected = CloneQuietlyExtensions.clone(actual);
 		assertEquals(expected, actual);
 	}
 
@@ -164,26 +168,6 @@ public class CloneQuietlyExtensionsTest
 		{
 			assertEquals(expected[i], actual[i]);
 		}
-	}
-
-	/**
-	 * Test method for {@link CloneQuietlyExtensions#withCloner(Object)}
-	 */
-	@Test
-	@Disabled("upgrade to jdk11")
-	public void testCloneWithCloner()
-	{
-		Person actual;
-		Person expected;
-		actual = Person.builder().name("Nikky").nickname("Six").gender(Gender.MALE).about("")
-			.married(false).build();
-		expected = CloneQuietlyExtensions.withCloner(actual);
-		assertEquals(expected, actual);
-		actual = Member.buildMember().name("Nikky").nickname("Six").gender(Gender.MALE).about("")
-			.married(false).dateofbirth(new Date()).dateofMarriage(new Date()).build();
-
-		expected = CloneQuietlyExtensions.withCloner(actual);
-		assertEquals(expected, actual);
 	}
 
 	/**
