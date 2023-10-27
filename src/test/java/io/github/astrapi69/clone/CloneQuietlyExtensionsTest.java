@@ -20,6 +20,7 @@
  */
 package io.github.astrapi69.clone;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
@@ -52,6 +53,11 @@ public class CloneQuietlyExtensionsTest
 		Object expected;
 		Object actual;
 
+		expected = Employee.builder().person(Person.builder().name("Nikky").nickname("Six")
+			.gender(Gender.MALE).about("").married(false).build()).build();
+		actual = CloneQuietlyExtensions.clone(expected);
+		assertEquals(expected, actual);
+
 		expected = CreateDateExtensions.newDate(2009, 3, 26, 10, 37, 4);
 		actual = CloneQuietlyExtensions.clone(expected);
 		assertEquals(expected, actual);
@@ -68,13 +74,16 @@ public class CloneQuietlyExtensionsTest
 		actual = CloneQuietlyExtensions.clone(null);
 		assertEquals(expected, actual);
 
+		expected = ArrayFactory.newArray("foo", "bar");
+		actual = CloneQuietlyExtensions.clone(expected);
+		assertArrayEquals((String[])expected, (String[])actual);
+
 	}
 
 	/**
 	 * Test method for {@link CloneQuietlyExtensions#clone(Object)} with an array
 	 */
 	@Test
-	@Disabled("upgrade to jdk11")
 	public void testCloneArray()
 	{
 		String[] expected;
@@ -84,8 +93,7 @@ public class CloneQuietlyExtensionsTest
 		actual = CloneQuietlyExtensions.clone(expected);
 		for (int i = 0; i < actual.length; i++)
 		{
-			assertEquals("Cloned object should be equal with the source object.", expected[i],
-				actual[i]);
+			assertEquals(expected[i], actual[i]);
 		}
 	}
 

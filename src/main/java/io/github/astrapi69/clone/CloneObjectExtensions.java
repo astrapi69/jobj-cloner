@@ -21,10 +21,15 @@
 package io.github.astrapi69.clone;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Optional;
 
 import com.rits.cloning.Cloner;
+
+import io.github.astrapi69.reflection.ReflectionExtensions;
 
 /**
  * The class {@link CloneObjectExtensions} provide methods for clone an object
@@ -142,13 +147,38 @@ public final class CloneObjectExtensions
 			clone = cloneCloneable(object);
 		}
 
-		// Try to clone the object with external cloner
+		// Try to clone the object with reflection
 		if (clone == null)
 		{
-			clone = CloneQuietlyExtensions.withCloner(object);
+			Optional<Object> optional = cloneObjectWithReflection(object);
+			if (optional.isPresent())
+			{
+				clone = optional.get();
+			}
 		}
 
 		return clone;
+	}
+
+	public static <T> Optional<T> cloneObjectWithReflection(T source)
+	{
+		if (source instanceof String)
+		{
+			return Optional.of((T)new String(((String)source).getBytes()));
+		}
+		try
+		{
+			T clone = (T)source.getClass().newInstance();
+			for (Field field : source.getClass().getDeclaredFields())
+			{
+				ReflectionExtensions.copyFieldValue(source, clone, field);
+			}
+			return Optional.of(clone);
+		}
+		catch (Exception e)
+		{
+			return Optional.empty();
+		}
 	}
 
 }

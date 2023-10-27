@@ -1,6 +1,7 @@
 
 dependencies {
     implementation("io.github.kostaskougios:cloning:$cloningVersion")
+    implementation("io.github.astrapi69:jobj-reflect:$jobjReflectVersion")
     testImplementation("io.github.astrapi69:silly-collection:$sillyCollectionVersion")
     testImplementation("io.github.astrapi69:test-object:$testObjectVersion")
     testImplementation("io.github.astrapi69:vintage-time:$vintageTimeVersion")
