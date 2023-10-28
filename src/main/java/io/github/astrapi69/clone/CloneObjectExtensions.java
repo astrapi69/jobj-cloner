@@ -1,22 +1,26 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2015 Asterios Raptis
+ * Copyright (C) 2022 Asterios Raptis
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package io.github.astrapi69.clone;
 
@@ -24,10 +28,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.Optional;
-
-import com.rits.cloning.Cloner;
 
 import io.github.astrapi69.reflection.ReflectionExtensions;
 
@@ -36,7 +37,6 @@ import io.github.astrapi69.reflection.ReflectionExtensions;
  */
 public final class CloneObjectExtensions
 {
-	private final static Cloner cloner = new Cloner();
 
 	private CloneObjectExtensions()
 	{
@@ -53,8 +53,6 @@ public final class CloneObjectExtensions
 	 * @throws NoSuchMethodException
 	 *             Thrown if a matching method is not found or if the name is "&lt;init&gt;"or
 	 *             "&lt;clinit&gt;".
-	 * @throws SecurityException
-	 *             Thrown if the security manager indicates a security violation.
 	 * @throws IllegalAccessException
 	 *             Thrown if this {@code Method} object is enforcing Java language access control
 	 *             and the underlying method is inaccessible.
@@ -124,8 +122,6 @@ public final class CloneObjectExtensions
 	 * @throws NoSuchMethodException
 	 *             Thrown if a matching method is not found or if the name is "&lt;init&gt;"or
 	 *             "&lt;clinit&gt;".
-	 * @throws SecurityException
-	 *             Thrown if the security manager indicates a security violation.
 	 * @throws IllegalAccessException
 	 *             Thrown if this {@code Method} object is enforcing Java language access control
 	 *             and the underlying method is inaccessible.
@@ -160,6 +156,16 @@ public final class CloneObjectExtensions
 		return clone;
 	}
 
+	/**
+	 * Clone object with reflection optional.
+	 *
+	 * @param <T>
+	 *            the type parameter
+	 * @param source
+	 *            the source
+	 * @return the optional
+	 */
+	@SuppressWarnings("unchecked")
 	public static <T> Optional<T> cloneObjectWithReflection(T source)
 	{
 		if (source instanceof String)
@@ -168,7 +174,7 @@ public final class CloneObjectExtensions
 		}
 		try
 		{
-			T clone = (T)source.getClass().newInstance();
+			T clone = (T)source.getClass().getDeclaredConstructor().newInstance();
 			for (Field field : source.getClass().getDeclaredFields())
 			{
 				ReflectionExtensions.copyFieldValue(source, clone, field);

@@ -4,6 +4,16 @@
 Version 2.1-SNAPSHOT
 -------------
 
+ADDED:
+
+- new dependency jobj-reflect in minor version 2.2
+- modularization of the project
+
+CHANGED:
+
+- update of jdk to version 17
+- update of gradle to new version 8.4
+
 Version 2
 -------------
 
